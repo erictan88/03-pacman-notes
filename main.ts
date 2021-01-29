@@ -1,47 +1,29 @@
-scene.onOverlapTile(SpriteKind.Player, myTiles.tile2, function (sprite, location) {
-    sprite.startEffect(effects.fire, 3000)
-    tiles.setTileAt(location, myTiles.transparency16)
-    Powerup2()
-})
 info.onCountdownEnd(function () {
     Powerup = 0
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`tile1`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`transparency16`)
+    info.changeScoreBy(1)
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`tile2`, function (sprite, location) {
+    sprite.startEffect(effects.fire, 3000)
+    tiles.setTileAt(location, assets.tile`transparency16`)
+    Powerup2()
 })
 function Powerup2 () {
     Powerup = 1
     info.startCountdown(3)
 }
-scene.onOverlapTile(SpriteKind.Player, myTiles.tile1, function (sprite, location) {
-    tiles.setTileAt(location, myTiles.transparency16)
-    info.changeScoreBy(1)
-})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (Powerup == 1) {
-        otherSprite.destroy(effects.fire, 500)
-        No_Ghosts += -1
+        tiles.placeOnRandomTile(otherSprite, sprites.dungeon.collectibleRedCrystal)
     } else {
         game.over(false)
     }
 })
-let New_Ghost: Sprite = null
 let Powerup = 0
 let No_Ghosts = 4
-tiles.setTilemap(tiles.createTilemap(hex`0a000f0007080808080808080806010a0a0a0a0a0a0a0a05010a090a090a09090a05010c090a090a0a090c05010a090a09090a0a0a05010a0a0a0a0a0a090a05010a09090a090a090a05010a0a090a09090a0a0501090a090a0b090a090501090a0a0a0a0a0a0905010a0a0a0909090a0905010c090a0a0a090a0c05010a0909090a09090a05010a0a0a0a0a0a0a0a0502030303030303030304`, img`
-    2 2 2 2 2 2 2 2 2 2 
-    2 . . . . . . . . 2 
-    2 . 2 . 2 . 2 2 . 2 
-    2 . 2 . 2 . . 2 . 2 
-    2 . 2 . 2 2 . . . 2 
-    2 . . . . . . 2 . 2 
-    2 . 2 2 . 2 . 2 . 2 
-    2 . . 2 . 2 2 . . 2 
-    2 2 . 2 . . 2 . 2 2 
-    2 2 . . . . . . 2 2 
-    2 . . . 2 2 2 . 2 2 
-    2 . 2 . . . 2 . . 2 
-    2 . 2 2 2 . 2 2 . 2 
-    2 . . . . . . . . 2 
-    . 2 2 2 2 2 2 2 2 2 
-    `, [myTiles.transparency16,sprites.dungeon.darkGroundWest,sprites.dungeon.darkGroundSouthWest0,sprites.dungeon.darkGroundSouth,sprites.dungeon.darkGroundSouthEast0,sprites.dungeon.darkGroundEast,sprites.dungeon.darkGroundNorthEast0,sprites.dungeon.darkGroundNorthWest0,sprites.dungeon.darkGroundNorth,sprites.dungeon.floorLight0,myTiles.tile1,sprites.dungeon.collectibleRedCrystal,myTiles.tile2], TileScale.Sixteen))
+tiles.setTilemap(tilemap`level1`)
 let Duck = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -175,36 +157,3 @@ Ghost.follow(Duck, 30)
 G2.follow(Duck, 40)
 G3.follow(Duck, 50)
 G4.follow(Duck, 60)
-game.onUpdateInterval(1000, function () {
-    if (No_Ghosts < 4) {
-        New_Ghost = sprites.create(img`
-            ........................
-            ........................
-            ........................
-            ........................
-            ..........ffff..........
-            ........ff1111ff........
-            .......fb111111bf.......
-            .......f11111111f.......
-            ......fd11111111df......
-            ......fd11111111df......
-            ......fddd1111dddf......
-            ......fbdbfddfbdbf......
-            ......fcdcf11fcdcf......
-            .......fb111111bf.......
-            ......fffcdb1bdffff.....
-            ....fc111cbfbfc111cf....
-            ....f1b1b1ffff1b1b1f....
-            ....fbfbffffffbfbfbf....
-            .........ffffff.........
-            ...........fff..........
-            ........................
-            ........................
-            ........................
-            ........................
-            `, SpriteKind.Enemy)
-        New_Ghost.follow(Duck, 30)
-        tiles.placeOnRandomTile(New_Ghost, sprites.dungeon.collectibleRedCrystal)
-        No_Ghosts += 1
-    }
-})
