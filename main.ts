@@ -8,11 +8,11 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`tile1`, function (sprite, loc
 scene.onOverlapTile(SpriteKind.Player, assets.tile`tile2`, function (sprite, location) {
     sprite.startEffect(effects.fire, 3000)
     tiles.setTileAt(location, assets.tile`transparency16`)
-    Powerup2()
-})
-function Powerup2 () {
     Powerup = 1
     info.startCountdown(3)
+})
+function Powerup2 () {
+	
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (Powerup == 1) {
@@ -22,7 +22,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     }
 })
 let Powerup = 0
-let No_Ghosts = 4
 tiles.setTilemap(tilemap`level1`)
 let Duck = sprites.create(img`
     . . . . . . . . . . . . . . . . 
@@ -44,6 +43,7 @@ let Duck = sprites.create(img`
     `, SpriteKind.Player)
 tiles.placeOnRandomTile(Duck, sprites.dungeon.collectibleRedCrystal)
 scene.cameraFollowSprite(Duck)
+let No_Ghosts = 4
 controller.moveSprite(Duck, 80, 80)
 let Ghost = sprites.create(img`
     ........................
