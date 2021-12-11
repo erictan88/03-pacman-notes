@@ -1,5 +1,23 @@
 info.onCountdownEnd(function () {
     Powerup = 0
+    Duck.setImage(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . b b b b b b . . . . 
+        . . . . . b b 5 5 5 5 5 b . . . 
+        . . . . b b 5 d 1 f 5 5 d f . . 
+        . . . . b 5 5 1 f f 5 d 4 c . . 
+        . . . . b 5 5 d f b d d 4 4 . . 
+        . b b b d 5 5 5 5 5 4 4 4 4 4 . 
+        . d d d b b d 5 5 4 4 4 4 4 b . 
+        . b d 5 5 5 b 5 5 5 5 5 5 b . . 
+        . d c 5 5 5 5 d 5 5 5 5 5 5 b . 
+        . b d c d 5 5 b 5 5 5 5 5 5 b . 
+        . c d d c c b d 5 5 5 5 5 d b . 
+        . . c b d d d d d 5 5 5 b b . . 
+        . . . c c c c c c c c b b . . . 
+        . . . . . . . . . . . . . . . . 
+        `)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`tile1`, function (sprite, location) {
     tiles.setTileAt(location, assets.tile`transparency16`)
@@ -10,10 +28,25 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`tile2`, function (sprite, loc
     tiles.setTileAt(location, assets.tile`transparency16`)
     Powerup = 1
     info.startCountdown(3)
+    Duck.setImage(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . 2 2 2 2 2 2 . . . . 
+        . . . . . 2 2 5 5 5 5 5 b . . . 
+        . . . . 2 2 5 d 1 f 5 5 d f . . 
+        . . . . 2 5 5 1 f f 5 d 4 c . . 
+        . . . . 2 5 5 d f b d d 4 4 . . 
+        . 2 2 2 d 5 5 5 5 5 4 4 4 4 4 . 
+        . d d d b b d 5 5 4 4 4 4 4 2 . 
+        . 2 d 5 5 5 b 5 5 5 5 5 5 2 . . 
+        . d c 5 5 5 5 d 5 5 5 5 5 5 2 . 
+        . 2 d c d 5 5 b 5 5 5 5 5 5 2 . 
+        . 2 d d c c b d 5 5 5 5 5 d 2 . 
+        . . 2 b d d d d d 5 5 5 2 2 . . 
+        . . . 2 2 2 2 2 2 2 2 2 2 . . . 
+        . . . . . . . . . . . . . . . . 
+        `)
 })
-function Powerup2 () {
-	
-}
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (Powerup == 1) {
         tiles.placeOnRandomTile(otherSprite, sprites.dungeon.collectibleRedCrystal)
@@ -22,8 +55,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     }
 })
 let Powerup = 0
+let Duck: Sprite = null
 tiles.setTilemap(tilemap`level1`)
-let Duck = sprites.create(img`
+Duck = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . b b b b b b . . . . 
